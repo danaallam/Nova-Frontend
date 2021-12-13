@@ -12,15 +12,15 @@ import {
   HomemadeApple_400Regular,
 } from "@expo-google-fonts/homemade-apple";
 
-export default function Start({ navigation }) {
+export default Start = ({ navigation }) => {
   const { width } = useWindowDimensions();
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fade = useRef(new Animated.Value(0)).current;
   const [fontsLoaded] = useFonts({
     HomemadeApple_400Regular,
   });
 
   useEffect(() => {
-    Animated.timing(fadeAnim, {
+    Animated.timing(fade, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
@@ -38,7 +38,7 @@ export default function Start({ navigation }) {
         style={[
           styles.container,
           {
-            opacity: fadeAnim,
+            opacity: fade,
           },
         ]}
       >
@@ -49,7 +49,7 @@ export default function Start({ navigation }) {
       </Animated.View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {

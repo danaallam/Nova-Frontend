@@ -4,19 +4,15 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
-  useWindowDimensions,
 } from "react-native";
+import BackImage from "../components/BackImage";
 import LoginForm from "../components/LoginForm";
-import bg from "../assets/bg.jpg";
 
 export default Login = ({ navigation }) => {
-  const { width } = useWindowDimensions();
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Image source={bg} style={{ width, height: width / 2 }} />
+        <BackImage />
         <LoginForm navigation={navigation} />
       </View>
     </TouchableWithoutFeedback>

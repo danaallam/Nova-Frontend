@@ -3,12 +3,11 @@ import { createStackNavigator } from "@react-navigation//stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import { Text, View } from "react-native";
 import Start from "../screens/Start";
 
 const Stack = createStackNavigator();
 
-export default function NavStack({ initialRoute = "Start" }) {
+export default function StackNav({ initialRoute = "Start" }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
