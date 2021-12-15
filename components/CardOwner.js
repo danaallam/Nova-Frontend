@@ -4,7 +4,6 @@ import Url from "./Url";
 import prof from "../assets/profile.png";
 
 export default CardOwner = ({ designer, profile, width }) => {
-  // console.log(profile);
   return (
     <View style={styles.imgContainer}>
       <Image
