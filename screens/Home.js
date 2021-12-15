@@ -1,21 +1,33 @@
-import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import BackImage from "../components/BackImage";
-import LoginForm from "../components/LoginForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Animated } from "react-native";
+import Card from "../components/Card";
+import Url from "../components/Url";
 
-export default Login = ({ navigation }) => {
+export default Home = ({ navigation }) => {
+  const [data, setData] = useState([]);
+
+  useEffect(async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/user/card", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const d = await res.json();
+    setData(d.cards);
+  }, []);
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <BackImage />
-        <LoginForm navigation={navigation} />
-      </View>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      {data && data.length > 0 && (
+        <Animated.FlatList
+          data={data}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Card item={item} />}
+        />
+      )}
+    </View>
   );
 };
 

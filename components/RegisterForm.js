@@ -70,12 +70,13 @@ export default RegisterForm = ({ navigation }) => {
     const data = await res.json();
 
     if (data.access_token) {
-      await AsyncStorage.setItem("token", data.access_token);
-      await AsyncStorage.setItem("user", JSON.stringify(data.user.id));
       setName("");
       setEmail("");
       setPassword("");
       setSelectedImage(null);
+      await AsyncStorage.setItem("token", data.access_token);
+      await AsyncStorage.setItem("user", JSON.stringify(data.user.id));
+      navigation.navigate("Account");
     } else {
       if (data.errors.email) {
         setEmailError(data.errors.email[0]);
@@ -96,7 +97,7 @@ export default RegisterForm = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : ""}
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

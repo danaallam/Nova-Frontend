@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Image,
   StyleSheet,
@@ -11,6 +11,8 @@ import {
   useFonts,
   HomemadeApple_400Regular,
 } from "@expo-google-fonts/homemade-apple";
+import Url from "../components/Url";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default Start = ({ navigation }) => {
   const { width } = useWindowDimensions();
@@ -19,14 +21,22 @@ export default Start = ({ navigation }) => {
     HomemadeApple_400Regular,
   });
 
-  useEffect(() => {
+  useEffect(async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/user/checkToken", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await res.json();
     Animated.timing(fade, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
     }).start();
     setTimeout(() => {
-      navigation.navigate("Login");
+      if (result.status == 200) navigation.navigate("Account");
+      else navigation.navigate("Login");
     }, 3500);
   }, []);
 
