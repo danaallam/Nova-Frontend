@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, View, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import AppContent from "./AppContent";
+import Rating from "./Rating";
 
 export default Application = ({
   visible,
@@ -14,9 +15,16 @@ export default Application = ({
   profile,
   width,
   rating,
+  categories,
+  designerId,
+  refresh,
+  setRefresh,
+  accepted,
 }) => {
   const [first, setFirst] = useState(0);
   const [end, setEnd] = useState(0);
+  const [star, setStar] = useState(-1);
+  const [show, setShow] = useState(false);
 
   const startMov = (e) => {
     setFirst(e.nativeEvent.pageY);
@@ -43,6 +51,7 @@ export default Application = ({
           }}
           onTouchEnd={(e) => {
             endMov(e);
+            setShow(false);
           }}
           name="horizontal-rule"
           size={45}
@@ -53,12 +62,27 @@ export default Application = ({
           applicants={applicants}
           width={width}
           posts={posts}
+          accepted={accepted}
           designer={designer}
           desc={desc}
           profession={profession}
           profile={profile}
           rating={rating}
+          refresh={refresh}
+          categories={categories}
+          setShow={setShow}
         />
+        {show && (
+          <Rating
+            setRefresh={setRefresh}
+            designer={designer}
+            designerId={designerId}
+            star={star}
+            setStar={setStar}
+            width={width}
+            setShow={setShow}
+          />
+        )}
       </View>
     </Modal>
   );

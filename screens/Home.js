@@ -6,6 +6,7 @@ import Url from "../components/Url";
 
 export default Home = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(async () => {
     const token = await AsyncStorage.getItem("token");
@@ -16,7 +17,8 @@ export default Home = ({ navigation }) => {
     });
     const d = await res.json();
     setData(d.cards);
-  }, []);
+    console.log(refresh);
+  }, [refresh]);
 
   return (
     <View style={styles.container}>
@@ -24,7 +26,9 @@ export default Home = ({ navigation }) => {
         <Animated.FlatList
           data={data}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Card item={item} />}
+          renderItem={({ item }) => (
+            <Card item={item} setRefresh={setRefresh} refresh={refresh} />
+          )}
         />
       )}
     </View>

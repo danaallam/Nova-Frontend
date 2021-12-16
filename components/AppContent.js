@@ -1,13 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import {
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import prof from "../assets/profile.png";
 import Button from "./Button";
 import CardDescription from "./CardDescription";
@@ -22,8 +15,15 @@ export default AppContent = ({
   profession,
   profile,
   width,
+  categories,
   rating,
+  accepted,
+  setShow,
 }) => {
+  const open = () => {
+    setShow(true);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -41,7 +41,7 @@ export default AppContent = ({
           <Text style={styles.designer}>{designer}</Text>
           <Text style={styles.designer}>{profession}</Text>
           <View style={styles.rating}>
-            {[...Array(rating)].map((s, key) => (
+            {[...Array(rating)].map((_, key) => (
               <Ionicons
                 key={key}
                 name="star"
@@ -61,9 +61,20 @@ export default AppContent = ({
             ))}
           </View>
           <CardPosts posts={posts} width={width} open={() => {}} />
-          <CardDescription applicants={applicants} desc={desc} lines={0} />
-          <Button title="Submit Resume" />
-          <Button title="Cover Letter" />
+          <CardDescription
+            applicants={applicants}
+            desc={desc}
+            lines={0}
+            categories={categories}
+          />
+          {accepted == 0 ? (
+            <>
+              <Button title="Submit Resume" onPress={() => {}} />
+              <Button title="Cover Letter" onPress={() => {}} />
+            </>
+          ) : (
+            <Button title="Done" onPress={open} />
+          )}
         </View>
       </ScrollView>
     </View>
@@ -71,7 +82,11 @@ export default AppContent = ({
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, marginTop: "7%", marginBottom: "4%" },
+  container: {
+    flex: 1,
+    marginTop: "7%",
+    marginBottom: "4%",
+  },
   contentContainer: {
     alignItems: "center",
   },
@@ -84,5 +99,8 @@ const styles = StyleSheet.create({
   rating: {
     flexDirection: "row",
     marginBottom: "5%",
+  },
+  empty: {
+    paddingHorizontal: 1,
   },
 });

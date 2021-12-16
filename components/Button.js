@@ -11,15 +11,14 @@ export default Button = ({ title, onPress }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: "white",
+    backgroundColor: "black",
     paddingHorizontal: "5%",
     paddingVertical: "2%",
-    borderWidth: 1,
     borderRadius: 30,
     marginBottom: "2%",
   },
   txt: {
     fontSize: 17,
-    color: "green",
+    color: "white",
   },
 });

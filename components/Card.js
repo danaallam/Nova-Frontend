@@ -5,7 +5,7 @@ import CardDescription from "./CardDescription";
 import CardOwner from "./CardOwner";
 import Application from "./Application";
 
-export default Card = ({ item }) => {
+export default Card = ({ item, refresh, setRefresh }) => {
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -16,8 +16,17 @@ export default Card = ({ item }) => {
   const [profile, setProfile] = useState("");
   const [profession, setProfession] = useState("");
   const [visible, setVisible] = useState(false);
+  const [lines, setLines] = useState(2);
+  const [cardId, setCardId] = useState(0);
+  const [designerId, setDesignerId] = useState(0);
+  const [save, setSave] = useState(-1);
+  const [accepted, setAccepted] = useState(-1);
 
   useEffect(() => {
+    setCardId(item.id);
+    setDesignerId(item.designer.id);
+    setSave(item.saved);
+    setAccepted(item.accepted);
     setPosts(item.posts);
     setCategories(item.categories);
     setDesc(item.description);
@@ -38,21 +47,36 @@ export default Card = ({ item }) => {
         visible={visible}
         setVisible={setVisible}
         width={width}
+        categories={categories}
         posts={posts}
         designer={designer}
         applicants={applicants}
+        designerId={designerId}
         desc={desc}
         profession={profession}
         profile={profile}
         rating={rating}
+        setRating={setRating}
+        refresh={refresh}
+        setRefresh={setRefresh}
+        accepted={accepted}
       />
-      <CardOwner designer={designer} profile={profile} width={width} />
+      <CardOwner
+        designer={designer}
+        profile={profile}
+        width={width}
+        cardId={cardId}
+        save={save}
+        setSave={setSave}
+      />
       <CardPosts posts={posts} width={width} open={open} />
       <CardDescription
+        categories={categories}
         applicants={applicants}
         desc={desc}
         open={open}
-        lines={2}
+        setLines={setLines}
+        lines={lines}
       />
     </View>
   );
