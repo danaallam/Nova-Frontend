@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import Swiper from "react-native-swiper";
 import Url from "./Url";
 
-export default CardPosts = ({ posts, width }) => {
+export default CardPosts = ({ posts, width, open }) => {
   return (
     <View style={[styles.container, { height: width }]}>
       <Swiper
@@ -19,11 +19,7 @@ export default CardPosts = ({ posts, width }) => {
             <TouchableOpacity
               activeOpacity={1}
               key={key}
-              //   onPress={() => {
-              //     navigation.navigate("Course", {
-              //       info: ins,
-              //     });
-              //   }}
+              onPress={() => open()}
             >
               <Image
                 style={{ width, height: width }}
