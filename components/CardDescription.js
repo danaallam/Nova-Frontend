@@ -25,7 +25,7 @@ export default CardDescription = ({ desc, applicants, open, lines }) => {
         style={[
           styles.applicants,
           {
-            marginHorizontal: lines > 0 ? "4%" : "1%",
+            marginHorizontal: lines > 0 ? "4%" : "4%",
             alignSelf: "flex-start",
           },
         ]}
@@ -45,6 +45,7 @@ export default CardDescription = ({ desc, applicants, open, lines }) => {
 const styles = StyleSheet.create({
   applicants: {
     flexDirection: "row",
+    marginTop: "1%"
   },
   nav: {
     alignSelf: "flex-end",

@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  Platform,
-} from "react-native";
+import { Modal, View, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import AppContent from "./AppContent";
 
@@ -33,13 +26,13 @@ export default Application = ({
     setEnd(e.nativeEvent.pageY);
   };
 
-  // useEffect(() => {
-  //   if (end) {
-  //     if (first + 50 < end) {
-  //       setVisible(false);
-  //     }
-  //   }
-  // }, [end]);
+  useEffect(() => {
+    if (end) {
+      if (first + 50 < end) {
+        setVisible(false);
+      }
+    }
+  }, [end]);
 
   return (
     <Modal visible={visible} animationType="slide" statusBarTranslucent={true}>
@@ -67,16 +60,6 @@ export default Application = ({
           rating={rating}
         />
       </View>
-      {/* <TouchableOpacity
-        style={[
-          styles.btn,
-          {
-            marginBottom: Platform.OS == "ios" ? "5%" : 0,
-          },
-        ]}
-      >
-        <Text style={styles.txt}>Submit Resume</Text>
-      </TouchableOpacity> */}
     </Modal>
   );
 };

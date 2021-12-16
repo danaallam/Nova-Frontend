@@ -15,7 +15,7 @@ export default Card = ({ item }) => {
   const [designer, setDesigner] = useState("");
   const [profile, setProfile] = useState("");
   const [profession, setProfession] = useState("");
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setPosts(item.posts);
