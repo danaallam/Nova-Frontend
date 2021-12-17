@@ -1,11 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from "react-native";
 import prof from "../assets/profile.png";
 import Button from "./Button";
 import CardDescription from "./CardDescription";
+import * as DocumentPicker from "expo-document-picker";
 import CardPosts from "./CardPosts";
 import Url from "./Url";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default AppContent = ({
   posts,
@@ -19,10 +28,64 @@ export default AppContent = ({
   rating,
   accepted,
   setShow,
+  ena,
+  setEna,
+  cardId,
+  applied,
+  setApplicants,
 }) => {
+  const [file, setFile] = useState("");
+  const [cv, setCv] = useState("");
+  const [msg, setMsg] = useState("");
+
   const open = () => {
     setShow(true);
   };
+
+  const uploadResume = async () => {
+    const permissionResult = await DocumentPicker.getDocumentAsync({
+      type: "application/pdf",
+    });
+    if (permissionResult.type == "success") {
+      setFile(permissionResult.name);
+      setCv(permissionResult);
+    } else {
+      return;
+    }
+  };
+
+  const apply = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const id = await AsyncStorage.getItem("user");
+    const body = new FormData();
+    body.append("resume", {
+      name: file,
+      uri: Platform.OS === "ios" ? cv.uri.replace("file://", "") : cv.uri,
+      type: "application/pdf",
+    });
+    body.append("freelancer_id", Number(id));
+    body.append("card_id", cardId);
+    const res = await fetch(Url + "api/user/ownCard", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body,
+    });
+    const data = await res.json();
+    setMsg(data.message);
+    setEna(true);
+    setFile("");
+    setApplicants((prev) => {
+      return prev + 1;
+    });
+  };
+
+  useEffect(() => {
+    if (applied == 1 && accepted == 0) {
+      setEna(true);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -67,13 +130,30 @@ export default AppContent = ({
             lines={0}
             categories={categories}
           />
-          {accepted == 0 ? (
+          {applied == 0 || (applied == 1 && accepted == 0) ? (
             <>
-              <Button title="Submit Resume" onPress={() => {}} />
-              <Button title="Cover Letter" onPress={() => {}} />
+              {file == "" ? (
+                <>
+                  <Button
+                    title="Upload Resume"
+                    onPress={uploadResume}
+                    ena={ena}
+                  />
+                  <View style={msg ? styles.resume : styles.empty}>
+                    <Text>{msg}</Text>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <View style={styles.resume}>
+                    <Text>{file}</Text>
+                  </View>
+                  <Button title="Done" onPress={apply} ena={ena} />
+                </>
+              )}
             </>
           ) : (
-            <Button title="Done" onPress={open} />
+            <Button title="Done" onPress={open} ena={ena} />
           )}
         </View>
       </ScrollView>
@@ -102,5 +182,11 @@ const styles = StyleSheet.create({
   },
   empty: {
     paddingHorizontal: 1,
+  },
+  resume: {
+    paddingHorizontal: "1%",
+    backgroundColor: "lightblue",
+    marginBottom: "2%",
+    borderRadius: 15,
   },
 });

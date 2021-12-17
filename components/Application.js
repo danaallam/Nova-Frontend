@@ -14,17 +14,20 @@ export default Application = ({
   profession,
   profile,
   width,
+  setRating,
   rating,
   categories,
   designerId,
-  refresh,
-  setRefresh,
   accepted,
+  cardId,
+  applied,
+  setApplicants,
 }) => {
   const [first, setFirst] = useState(0);
   const [end, setEnd] = useState(0);
   const [star, setStar] = useState(-1);
   const [show, setShow] = useState(false);
+  const [ena, setEna] = useState(false);
 
   const startMov = (e) => {
     setFirst(e.nativeEvent.pageY);
@@ -59,22 +62,27 @@ export default Application = ({
           style={styles.modalToggle}
         />
         <AppContent
+          setApplicants={setApplicants}
+          cardId={cardId}
+          ena={ena}
+          setEna={setEna}
           applicants={applicants}
           width={width}
           posts={posts}
+          applied={applied}
           accepted={accepted}
           designer={designer}
           desc={desc}
           profession={profession}
           profile={profile}
           rating={rating}
-          refresh={refresh}
           categories={categories}
           setShow={setShow}
         />
         {show && (
           <Rating
-            setRefresh={setRefresh}
+            setRating={setRating}
+            setEna={setEna}
             designer={designer}
             designerId={designerId}
             star={star}

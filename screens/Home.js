@@ -6,19 +6,18 @@ import Url from "../components/Url";
 
 export default Home = ({ navigation }) => {
   const [data, setData] = useState([]);
-  const [refresh, setRefresh] = useState(0);
+  const [rating, setRating] = useState("");
 
   useEffect(async () => {
     const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/user/card", {
+    const res = await fetch(Url + "api/user/ownCard", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const d = await res.json();
     setData(d.cards);
-    console.log(refresh);
-  }, [refresh]);
+  }, [rating]);
 
   return (
     <View style={styles.container}>
@@ -27,7 +26,7 @@ export default Home = ({ navigation }) => {
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Card item={item} setRefresh={setRefresh} refresh={refresh} />
+            <Card item={item} rating={rating} setRating={setRating} />
           )}
         />
       )}

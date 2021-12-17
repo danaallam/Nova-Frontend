@@ -5,13 +5,13 @@ import CardDescription from "./CardDescription";
 import CardOwner from "./CardOwner";
 import Application from "./Application";
 
-export default Card = ({ item, refresh, setRefresh }) => {
+export default Card = ({ item, rating, setRating }) => {
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [desc, setDesc] = useState("");
   const [applicants, setApplicants] = useState("");
-  const [rating, setRating] = useState("");
+  // const [rating, setRating] = useState("");
   const [designer, setDesigner] = useState("");
   const [profile, setProfile] = useState("");
   const [profession, setProfession] = useState("");
@@ -21,12 +21,14 @@ export default Card = ({ item, refresh, setRefresh }) => {
   const [designerId, setDesignerId] = useState(0);
   const [save, setSave] = useState(-1);
   const [accepted, setAccepted] = useState(-1);
+  const [applied, setApplied] = useState(-1);
 
   useEffect(() => {
     setCardId(item.id);
     setDesignerId(item.designer.id);
     setSave(item.saved);
     setAccepted(item.accepted);
+    setApplied(item.applied);
     setPosts(item.posts);
     setCategories(item.categories);
     setDesc(item.description);
@@ -44,6 +46,7 @@ export default Card = ({ item, refresh, setRefresh }) => {
   return (
     <View style={styles.container}>
       <Application
+        cardId={cardId}
         visible={visible}
         setVisible={setVisible}
         width={width}
@@ -57,9 +60,9 @@ export default Card = ({ item, refresh, setRefresh }) => {
         profile={profile}
         rating={rating}
         setRating={setRating}
-        refresh={refresh}
-        setRefresh={setRefresh}
+        setApplicants={setApplicants}
         accepted={accepted}
+        applied={applied}
       />
       <CardOwner
         designer={designer}

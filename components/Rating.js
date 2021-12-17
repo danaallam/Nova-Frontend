@@ -12,25 +12,27 @@ export default Rating = ({
   setStar,
   width,
   setShow,
-  setRefresh,
+  setEna,
+  setRating,
 }) => {
   const addRating = async () => {
-    const body = new FormData();
-    const token = await AsyncStorage.getItem("token");
-    const id = await AsyncStorage.getItem("user");
-    body.append("rating", star + 1);
-    body.append("freelancer_id", JSON.parse(id));
-    body.append("designer_id", designerId);
-    const res = await fetch(Url + "api/user/rating", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body,
-    });
-    setRefresh((prev) => {
-      return prev + 1;
-    });
+    if (star + 1 > 0) {
+      const body = new FormData();
+      const token = await AsyncStorage.getItem("token");
+      const id = await AsyncStorage.getItem("user");
+      body.append("rating", star + 1);
+      body.append("freelancer_id", JSON.parse(id));
+      body.append("designer_id", designerId);
+      const res = await fetch(Url + "api/user/rating", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body,
+      });
+      setRating((prev) => (prev + star + 1) / 2);
+      setEna(true);
+    }
     setShow(false);
   };
 

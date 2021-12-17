@@ -35,13 +35,10 @@ export default LoginForm = ({ navigation }) => {
     });
     const data = await res.json();
     if (data.access_token) {
-      console.log(data);
       setEmail("");
       setPassword("");
       await AsyncStorage.setItem("token", data.access_token);
       await AsyncStorage.setItem("user", JSON.stringify(data.user.id));
-      console.log(await AsyncStorage.getItem("token"));
-      console.log(await AsyncStorage.getItem("user"));
       navigation.navigate("Account");
     } else {
       setError(data.error);
