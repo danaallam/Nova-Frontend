@@ -26,7 +26,7 @@ export default function TabNav() {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="home-variant" color={color} size={size} />
           ),
         }}
       />
