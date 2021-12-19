@@ -1,26 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 import Card from "../components/Card";
+import Header from "../components/Header";
 import Url from "../components/Url";
 
-export default Accepted = () => {
+export default Saved = () => {
   const [data, setData] = useState([]);
   const [rating, setRating] = useState("");
 
   useEffect(async () => {
     const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/user/accepted", {
+    const res = await fetch(Url + "api/user/save", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const d = await res.json();
-    setData(d.cards);
+    setData(d.savedCards);
   }, [rating]);
 
   return (
     <View style={styles.container}>
+      <Header text="Saved" />
       {data && data.length > 0 && (
         <Animated.FlatList
           data={data}

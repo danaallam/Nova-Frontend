@@ -1,15 +1,17 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const Tab = createBottomTabNavigator();
+
 import {
   MaterialCommunityIcons,
   Ionicons,
   MaterialIcons,
+  Entypo,
 } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Accepted from "../screens/Accepted";
-
-const Tab = createBottomTabNavigator();
 
 export default function TabNav() {
   return (
@@ -17,13 +19,24 @@ export default function TabNav() {
       screenOptions={{
         // shifting: true,
         // tabBarShowLabel: false,
-        tabBarHideOnKeyboard: true,
+        // tabBarHideOnKeyboard: true,
         // tabBarStyle: { position: "absolute" },
         // headerShown: false,
         // tabBarLabelStyle:{
         //   fontSize: 3
         // }
+        headerLeft: () => (
+          <Entypo name="menu" size={28} style={{ marginLeft: "5%" }} />
+        ),
         tabBarActiveTintColor: "black",
+        // tabBarInactiveTintColor: "black",
+        headerStyle: {
+          // backgroundColor: '#f4511e',
+        },
+        // headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
       }}
     >
       <Tab.Screen
