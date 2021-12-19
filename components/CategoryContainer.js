@@ -1,15 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 import Category from "./Category";
+import { JobContext } from "../contexts/JobContext";
 
 export default CategoryContainer = ({ categories, Url, setData }) => {
   const [perc, setPerc] = useState([]);
+  const {
+    actions: { getAllJobs },
+  } = useContext(JobContext);
 
   useEffect(async () => {
+    const token = await AsyncStorage.getItem("token");
     if (perc.length > 0) {
       const body = new FormData();
-      const token = await AsyncStorage.getItem("token");
       perc.forEach((e) => {
         body.append("category[]", e);
       });
@@ -22,6 +26,8 @@ export default CategoryContainer = ({ categories, Url, setData }) => {
       });
       const d = await res.json();
       setData(d.cards);
+    } else {
+      await getAllJobs();
     }
   }, [perc]);
 
@@ -34,7 +40,6 @@ export default CategoryContainer = ({ categories, Url, setData }) => {
         ...prev.slice(ind + 1, prev.length),
       ]);
     }
-    console.log(perc);
   };
 
   return (
