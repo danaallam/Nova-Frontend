@@ -11,7 +11,6 @@ export default Card = ({ item, rating, setRating }) => {
   const [categories, setCategories] = useState([]);
   const [desc, setDesc] = useState("");
   const [applicants, setApplicants] = useState("");
-  // const [rating, setRating] = useState("");
   const [designer, setDesigner] = useState("");
   const [profile, setProfile] = useState("");
   const [profession, setProfession] = useState("");

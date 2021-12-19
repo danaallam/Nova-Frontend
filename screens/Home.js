@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Animated } from "react-native";
+import { StyleSheet, View, Animated } from "react-native";
 import Card from "../components/Card";
 import Url from "../components/Url";
 
