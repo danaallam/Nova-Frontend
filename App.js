@@ -1,7 +1,11 @@
 import React from "react";
 import MenuNav from "./routes/MenuNav";
-import StackNav from "./routes/StackNav";
+import JobContextProvider from "./contexts/JobContext";
 
 export default function App() {
-  return <MenuNav />;
+  return (
+    <JobContextProvider>
+      <MenuNav />
+    </JobContextProvider>
+  );
 }

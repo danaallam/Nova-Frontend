@@ -1,29 +1,23 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { StyleSheet, View, Animated } from "react-native";
 import Card from "../components/Card";
-import Url from "../components/Url";
+import { JobContext } from "../contexts/JobContext";
 
 export default Home = ({ navigation }) => {
-  const [data, setData] = useState([]);
-  const [rating, setRating] = useState("");
+  const {
+    state: { jobs, rating },
+    actions: { getJobs, setRating },
+  } = useContext(JobContext);
 
   useEffect(async () => {
-    const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/user/ownCard", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const d = await res.json();
-    setData(d.cards);
+    await getJobs();
   }, [rating]);
 
   return (
     <View style={styles.container}>
-      {data && data.length > 0 && (
+      {jobs && jobs.length > 0 && (
         <Animated.FlatList
-          data={data}
+          data={jobs}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Card item={item} rating={rating} setRating={setRating} />

@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, TextInput, Animated } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { StyleSheet, View, Animated } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CategoryContainer from "../components/CategoryContainer";
-import Url from "../components/Url";
+import { JobContext } from "../contexts/JobContext";
 import Card from "../components/Card";
+import Url from "../components/Url";
 
 export default Search = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
-  const [data, setData] = useState([]);
-  const [rating, setRating] = useState("");
+  const {
+    state: { allJobs, rating },
+    actions: { getAllJobs, setRating, setAllJobs },
+  } = useContext(JobContext);
 
   useEffect(async () => {
-    const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/user/card", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const d = await res.json();
-    setData(d.cards);
+    await getAllJobs();
   }, [rating]);
 
   useEffect(async () => {
@@ -34,10 +30,14 @@ export default Search = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <CategoryContainer categories={categories} Url={Url} setData={setData} />
-      {data && data.length > 0 && (
+      <CategoryContainer
+        categories={categories}
+        Url={Url}
+        setData={setAllJobs}
+      />
+      {allJobs && allJobs.length > 0 && (
         <Animated.FlatList
-          data={data}
+          data={allJobs}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Card item={item} rating={rating} setRating={setRating} />

@@ -1,12 +1,54 @@
-import React, { createContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useState, useEffect } from "react";
+import Url from "../components/Url";
 
 export const JobContext = createContext();
 
-export default JobContextProvider = () => {
-    return (
-        <JobContext.Provider>
-            
-        </JobContext.Provider>
-    )
-}
+export default JobContextProvider = (props) => {
+  const [jobs, setJobs] = useState([]);
+  const [rating, setRating] = useState("");
+  const [allJobs, setAllJobs] = useState([]);
+  const [accJobs, setAccJobs] = useState([]);
 
+  const getJobs = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/user/ownCard", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    setJobs(data.cards);
+  };
+
+  const getAllJobs = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/user/card", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    setAllJobs(data.cards);
+  };
+
+  const getAccJobs = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/user/accepted", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    setAccJobs(data.cards);
+  };
+
+  const context = {
+    state: { jobs, rating, allJobs, accJobs },
+    actions: { getJobs, getAllJobs, getAccJobs, setRating, setAllJobs },
+  };
+
+  return (
+    <JobContext.Provider value={context}>{props.children}</JobContext.Provider>
+  );
+};
