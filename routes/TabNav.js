@@ -1,8 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
+import Accepted from "../screens/Accepted";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +31,11 @@ export default function TabNav() {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home-variant" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="home-variant"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -36,6 +45,15 @@ export default function TabNav() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Accepted"
+        component={Accepted}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="verified-user" size={size} color={color} />
           ),
         }}
       />
