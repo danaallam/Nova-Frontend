@@ -39,7 +39,6 @@ export default Jobs = ({ item, rating, setRating }) => {
     // setProfile(item.designer.profile);
     // setProfession(item.designer.profession);
     // setRating(item.designer.rating);
-    console.log(item);
   }, []);
 
   const open = () => {

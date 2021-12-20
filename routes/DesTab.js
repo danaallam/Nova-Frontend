@@ -57,11 +57,11 @@ export default function DesTab() {
         }}
       />
       <Tab.Screen
-        name="Requests"
+        name="Community"
         component={Requests}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ios-notifications" size={size} color={color} />
+            <Ionicons name="people" size={size} color={color} />
           ),
         }}
       />
