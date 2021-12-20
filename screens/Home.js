@@ -5,13 +5,13 @@ import { JobContext } from "../contexts/JobContext";
 
 export default Home = ({ navigation }) => {
   const {
-    state: { jobs, rating },
+    state: { jobs, rating, ref },
     actions: { getJobs, setRating },
   } = useContext(JobContext);
 
   useEffect(async () => {
     await getJobs();
-  }, [rating]);
+  }, [rating, ref]);
 
   return (
     <View style={styles.container}>

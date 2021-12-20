@@ -5,25 +5,23 @@ import { JobContext } from "../contexts/JobContext";
 
 export default Accepted = () => {
   const {
-    state: { accJobs, rating },
+    state: { accJobs, rating, ref },
     actions: { getAccJobs, setRating },
   } = useContext(JobContext);
 
   useEffect(async () => {
     await getAccJobs();
-  }, [rating]);
+  }, [rating, ref]);
 
   return (
     <View style={styles.container}>
-      {accJobs && accJobs.length > 0 && (
-        <Animated.FlatList
-          data={accJobs}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card item={item} rating={rating} setRating={setRating} />
-          )}
-        />
-      )}
+      <Animated.FlatList
+        data={accJobs}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card item={item} rating={rating} setRating={setRating} />
+        )}
+      />
     </View>
   );
 };

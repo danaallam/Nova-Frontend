@@ -6,7 +6,7 @@ import CardOwner from "./CardOwner";
 import Application from "./Application";
 import Users from "./Users";
 
-export default Jobs = ({ item, rating, setRating }) => {
+export default Jobs = ({ item, rating, setRating, navigation }) => {
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -47,7 +47,7 @@ export default Jobs = ({ item, rating, setRating }) => {
 
   return (
     <View style={styles.container}>
-      <Users visible={visible} setVisible={setVisible} users={users} />
+      <Users visible={visible} setVisible={setVisible} users={users} navigation={navigation} />
       <CardPosts posts={posts} width={width} open={open} />
       <CardDescription
         categories={categories}

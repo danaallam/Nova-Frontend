@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Modal, View, StyleSheet, Animated } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import User from "./User";
+import React, { useEffect, useState } from "react";
+import { Modal, View, StyleSheet } from "react-native";
+import { WebView } from "react-native-webview";
 
-
-export default Users = ({ visible, setVisible, users, navigation }) => {
+export default Pdf = ({ visible, setVisible, resume, Url }) => {
   const [first, setFirst] = useState(0);
   const [end, setEnd] = useState(0);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    console.log("resume", resume);
+  }, []);
 
   const startMov = (e) => {
     setFirst(e.nativeEvent.pageY);
@@ -41,30 +44,10 @@ export default Users = ({ visible, setVisible, users, navigation }) => {
           color="black"
           style={styles.modalToggle}
         />
-        {/* {users &&
-          users.map((user, key) => (
-            <WebView
-              key={key}
-              source={{
-                uri: Url + user.resume,
-              }}
-            />
-            // <View style={{height: width/4}}></View>
-          ))} */}
-
-        <Animated.FlatList
-          style={styles.flatList}
-          data={users}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <User
-              resume={item.resume}
-              name={item.freelancer.name}
-              email={item.freelancer.email}
-              profile={item.freelancer.profile}
-              navigation={navigation}
-            />
-          )}
+        <WebView
+          source={{
+            uri: Url + resume,
+          }}
         />
       </View>
     </Modal>
@@ -98,9 +81,5 @@ const styles = StyleSheet.create({
   txt: {
     fontSize: 17,
     color: "white",
-  },
-  flatList: {
-    marginTop: "15%",
-    marginHorizontal: "1%",
   },
 });

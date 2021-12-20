@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import Url from "../components/Url";
 
 export const JobContext = createContext();
@@ -9,6 +9,7 @@ export default JobContextProvider = (props) => {
   const [rating, setRating] = useState("");
   const [allJobs, setAllJobs] = useState([]);
   const [accJobs, setAccJobs] = useState([]);
+  const [ref, setRef] = useState(0);
 
   const getJobs = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -44,8 +45,8 @@ export default JobContextProvider = (props) => {
   };
 
   const context = {
-    state: { jobs, rating, allJobs, accJobs },
-    actions: { getJobs, getAllJobs, getAccJobs, setRating, setAllJobs },
+    state: { jobs, rating, allJobs, accJobs, ref },
+    actions: { getJobs, getAllJobs, getAccJobs, setRating, setAllJobs, setRef },
   };
 
   return (

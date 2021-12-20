@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React from "react";
+import React, { useContext } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { JobContext } from "../contexts/JobContext";
 import Button from "./Button";
 import Url from "./Url";
 
@@ -15,6 +16,10 @@ export default Rating = ({
   setEna,
   setRating,
 }) => {
+  const {
+    actions: { setRef },
+  } = useContext(JobContext);
+
   const addRating = async () => {
     if (star + 1 > 0) {
       const body = new FormData();
@@ -33,6 +38,7 @@ export default Rating = ({
       setRating((prev) => (prev + star + 1) / 2);
       setEna(true);
     }
+    setRef((prev) => prev + 1);
     setShow(false);
   };
 

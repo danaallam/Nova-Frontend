@@ -9,13 +9,13 @@ import Url from "../components/Url";
 export default Search = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const {
-    state: { allJobs, rating },
+    state: { allJobs, rating, ref },
     actions: { getAllJobs, setRating, setAllJobs },
   } = useContext(JobContext);
 
   useEffect(async () => {
     await getAllJobs();
-  }, [rating]);
+  }, [rating, ref]);
 
   useEffect(async () => {
     const token = await AsyncStorage.getItem("token");
@@ -35,15 +35,13 @@ export default Search = ({ navigation }) => {
         Url={Url}
         setData={setAllJobs}
       />
-      {allJobs && allJobs.length > 0 && (
-        <Animated.FlatList
-          data={allJobs}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card item={item} rating={rating} setRating={setRating} />
-          )}
-        />
-      )}
+      <Animated.FlatList
+        data={allJobs}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card item={item} rating={rating} setRating={setRating} />
+        )}
+      />
     </View>
   );
 };

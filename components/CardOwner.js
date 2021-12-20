@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Url from "./Url";
 import prof from "../assets/profile.png";
 import { MaterialIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { JobContext } from "../contexts/JobContext";
 
 export default CardOwner = ({
   designer,
@@ -13,10 +14,16 @@ export default CardOwner = ({
   save,
   setSave,
 }) => {
+  const {
+    state: { ref },
+    actions: { setRef },
+  } = useContext(JobContext);
+  useEffect(() => {}, [ref]);
   const saved = async () => {
     const body = new FormData();
     const token = await AsyncStorage.getItem("token");
     const id = await AsyncStorage.getItem("user");
+
     body.append("freelancer_id", Number(id));
     body.append("card_id", cardId);
     const res = await fetch(Url + "api/user/save", {
@@ -26,7 +33,6 @@ export default CardOwner = ({
       },
       body,
     });
-    setSave(1);
   };
 
   const unSave = async () => {
@@ -37,7 +43,6 @@ export default CardOwner = ({
         Authorization: `Bearer ${token}`,
       },
     });
-    setSave(0);
   };
 
   return (
@@ -55,8 +60,9 @@ export default CardOwner = ({
       <Text style={styles.txt}>{designer}</Text>
       <TouchableOpacity
         style={styles.save}
-        onPress={() => {
-          save ? unSave() : saved();
+        onPress={async () => {
+          save ? await unSave() : await saved();
+          setRef((prev) => prev + 1);
         }}
       >
         <MaterialIcons

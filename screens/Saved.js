@@ -1,13 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Url from "../components/Url";
+import { JobContext } from "../contexts/JobContext";
 
 export default Saved = () => {
   const [data, setData] = useState([]);
   const [rating, setRating] = useState("");
+  const {
+    state: { ref },
+  } = useContext(JobContext);
 
   useEffect(async () => {
     const token = await AsyncStorage.getItem("token");
@@ -18,7 +22,7 @@ export default Saved = () => {
     });
     const d = await res.json();
     setData(d.savedCards);
-  }, [rating]);
+  }, [rating, ref]);
 
   return (
     <View style={styles.container}>

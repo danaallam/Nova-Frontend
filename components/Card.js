@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, useWindowDimensions, StyleSheet } from "react-native";
 import CardPosts from "./CardPosts";
 import CardDescription from "./CardDescription";
 import CardOwner from "./CardOwner";
 import Application from "./Application";
+import { JobContext } from "../contexts/JobContext";
 
 export default Card = ({ item, rating, setRating }) => {
+  const { state: jobs } = useContext(JobContext);
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -36,7 +38,7 @@ export default Card = ({ item, rating, setRating }) => {
     setProfile(item.designer.profile);
     setProfession(item.designer.profession);
     setRating(item.designer.rating);
-  }, []);
+  }, [jobs]);
 
   const open = () => {
     setVisible(true);
@@ -87,6 +89,7 @@ export default Card = ({ item, rating, setRating }) => {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
+    marginTop: "2%",
     marginBottom: "5%",
   },
 });

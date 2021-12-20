@@ -20,7 +20,7 @@ export default DesHome = ({ navigation }) => {
           data={jobs}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Jobs item={item} rating={rating} setRating={setRating} />
+            <Jobs item={item} rating={rating} setRating={setRating} navigation={navigation}/>
           )}
         />
       )}
