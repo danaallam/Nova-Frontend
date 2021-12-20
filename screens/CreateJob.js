@@ -2,10 +2,10 @@ import React from "react";
 import { View } from "react-native";
 import Header from "../components/Header";
 
-export default Profile = () => {
+export default CreateJob = () => {
   return (
     <View>
-      <Header text="Profile" />
+      <Header text="JObs" />
     </View>
   );
 };

@@ -29,7 +29,7 @@ export default LoginForm = ({ navigation }) => {
     const body = new FormData();
     body.append("email", email.toLowerCase());
     body.append("password", password);
-    const res = await fetch(Url + "api/user/login", {
+    const res = await fetch(Url + "api/designer/login", {
       method: "POST",
       body,
     });
@@ -38,7 +38,7 @@ export default LoginForm = ({ navigation }) => {
       setEmail("");
       setPassword("");
       await AsyncStorage.setItem("token", data.access_token);
-      await AsyncStorage.setItem("user", JSON.stringify(data.user.id));
+      await AsyncStorage.setItem("user", JSON.stringify(data.designer.id));
       navigation.navigate("Account");
     } else {
       setError(data.error);
@@ -123,7 +123,7 @@ export default LoginForm = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text>Login as Designer</Text>
+          <Text>Login as Freelancer</Text>
         </TouchableOpacity>
       </View>
     );

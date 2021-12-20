@@ -29,13 +29,20 @@ export default Start = ({ navigation }) => {
       },
     });
     const result = await res.json();
+    const req = await fetch(Url + "api/designer/checkToken", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const resul = await req.json();
     Animated.timing(fade, {
       toValue: 1,
       duration: 5000,
       useNativeDriver: true,
     }).start();
     setTimeout(() => {
-      if (result.status == 200) navigation.navigate("Account");
+      if (result.status == 200 || resul.status == 200)
+        navigation.navigate("Account");
       else navigation.navigate("Login");
     }, 3500);
   }, []);
