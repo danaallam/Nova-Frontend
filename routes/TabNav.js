@@ -8,17 +8,20 @@ import {
   Ionicons,
   MaterialIcons,
   Entypo,
+  FontAwesome,
 } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Accepted from "../screens/Accepted";
+import Profile from "../screens/Profile";
+import AddPost from "../screens/AddPost";
 
 export default function TabNav() {
   return (
     <Tab.Navigator
       screenOptions={{
         // shifting: true,
-        // tabBarShowLabel: false,
+        tabBarShowLabel: false,
         // tabBarHideOnKeyboard: true,
         // tabBarStyle: { position: "absolute" },
         // headerShown: false,
@@ -62,11 +65,29 @@ export default function TabNav() {
         }}
       />
       <Tab.Screen
+        name="New post"
+        component={AddPost}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle-sharp" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Accepted"
         component={Accepted}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="verified-user" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user-circle" size={size} color={color} />
           ),
         }}
       />

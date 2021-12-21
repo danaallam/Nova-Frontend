@@ -1,15 +1,9 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Profile from "../screens/Profile";
 import Settings from "../screens/Settings";
 import Login from "../screens/Login";
 import Saved from "../screens/Saved";
-import {
-  Ionicons,
-  FontAwesome,
-  MaterialIcons,
-  AntDesign,
-} from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import StackNav from "./StackNav";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -27,19 +21,6 @@ export default MenuNav = () => {
           itemStyle: { marginVertical: 10 },
         }}
       >
-        <Drawer.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            drawerIcon: ({ focused }) => (
-              <FontAwesome
-                name="user-circle"
-                size={24}
-                color={focused ? "#e91e63" : "black"}
-              />
-            ),
-          }}
-        />
         <Drawer.Screen
           name="Jobs"
           component={StackNav}

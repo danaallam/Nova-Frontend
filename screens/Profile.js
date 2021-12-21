@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Platform, View, Image } from "react-native";
-import Header from "../components/Header";
 import * as DocumentPicker from "expo-document-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Url from "../components/Url";
@@ -41,8 +40,7 @@ export default Profile = () => {
   };
 
   return (
-    <View>
-      <Header text="Profile" />
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       {/* <Image
         style={[styles.img, { width: width / 3, height: width / 3 }]}
         source={
