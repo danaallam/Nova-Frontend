@@ -6,13 +6,14 @@ import {
   StyleSheet,
   useWindowDimensions,
   Text,
-  ScrollView,
+  Image,
   Linking,
   TouchableOpacity,
 } from "react-native";
 import CardPosts from "./CardPosts";
 import Pdf from "./Pdf";
 import { DesContext } from "../contexts/DesContext";
+import prof from "../assets/profile.png";
 
 export default UserInfo = ({
   openInfo,
@@ -24,6 +25,10 @@ export default UserInfo = ({
   phone,
   cardId,
   uid,
+  profile,
+  name,
+  email,
+  link,
 }) => {
   const { width } = useWindowDimensions();
   const [first, setFirst] = useState(0);
@@ -64,34 +69,72 @@ export default UserInfo = ({
         color="black"
         style={styles.modalToggle}
       />
-      <ScrollView style={styles.modalContent}>
+      <View style={styles.modalContent}>
         <View style={styles.user}>
           <CardPosts posts={posts} width={width} open={() => {}} />
         </View>
         <View style={styles.desc}>
-          <View style={styles.exp}>
-            <Text style={styles.txt}>Years of experience: </Text>
-            <Text>{experience} years</Text>
+          <View>
+            <View style={styles.exp}>
+              <Text style={styles.txt}>Years of experience: </Text>
+              <Text>{experience} years</Text>
+            </View>
+            <View style={styles.exp}>
+              <Text style={styles.txt}>Phone Number: </Text>
+              <Text
+                style={styles.phone}
+                onPress={() => Linking.openURL(`tel:${phone}`)}
+              >
+                {phone}
+              </Text>
+            </View>
           </View>
-          <View style={styles.exp}>
-            <Text style={styles.txt}>Phone Number: </Text>
-            <Text
-              style={styles.phone}
-              onPress={() => Linking.openURL(`tel:${phone}`)}
-            >
-              {phone}
-            </Text>
+          <TouchableOpacity
+            style={styles.pdf}
+            onPress={() => {
+              setOpen(true);
+            }}
+          >
+            <AntDesign name="pdffile1" size={40} color="red" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.content}>
+          <Image
+            style={[styles.img, { width: width / 5, height: width / 5 }]}
+            source={
+              profile
+                ? {
+                    uri: Url + profile,
+                  }
+                : prof
+            }
+          />
+          <View style={styles.txt}>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.email}>{email}</Text>
+            <View style={styles.icons}>
+              <TouchableOpacity
+                style={styles.link}
+                onPress={() => Linking.openURL(link)}
+              >
+                <AntDesign name="linkedin-square" size={20} color="#0077b5" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.link}
+                onPress={() => Linking.openURL(link)}
+              >
+                <AntDesign name="facebook-square" size={20} color="#4867aa" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.link}
+                onPress={() => Linking.openURL(link)}
+              >
+                <AntDesign name="instagram" size={20} color="#de4574" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.pdf}
-          onPress={() => {
-            setOpen(true);
-          }}
-        >
-          <AntDesign name="pdffile1" size={100} color="red" />
-        </TouchableOpacity>
-        <View style={styles.btns}>
+        <View style={[styles.btns, { width }]}>
           <TouchableOpacity
             style={styles.acc}
             onPress={async () => {
@@ -113,7 +156,7 @@ export default UserInfo = ({
             <Text style={styles.btnText}>Reject</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </Modal>
   );
 };
@@ -131,30 +174,74 @@ const styles = StyleSheet.create({
     top: "5%",
   },
   user: { marginTop: "15%" },
-  desc: { marginTop: "5%" },
+  desc: {
+    marginTop: "5%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   txt: { fontWeight: "bold" },
   exp: { flexDirection: "row" },
   phone: { color: "blue" },
-  pdf: {
-    alignSelf: "center",
-    marginVertical: "10%",
-  },
   btns: {
+    position: "absolute",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignSelf: "center",
+    bottom: "5%",
+    paddingHorizontal: "25%",
   },
   acc: {
+    justifyContent: "center",
     backgroundColor: "green",
-    padding: "3%",
-    borderRadius: 20,
+    padding: "4%",
+    borderRadius: 10,
   },
   rej: {
+    justifyContent: "center",
     backgroundColor: "red",
-    padding: "3%",
-    borderRadius: 20,
+    padding: "4%",
+    borderRadius: 10,
   },
   btnText: {
     color: "white",
     fontSize: 16,
+  },
+
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "15%",
+  },
+  info: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: "2%",
+  },
+  img: {
+    borderWidth: 1,
+    borderRadius: 70,
+    backgroundColor: "white",
+  },
+  name: {
+    fontSize: 16,
+    marginLeft: "3%",
+  },
+  email: {
+    fontSize: 12,
+    marginLeft: "3%",
+  },
+  pdf: {
+    alignSelf: "center",
+  },
+  link: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: "3%",
+  },
+  icons: {
+    flexDirection: "row",
+    marginLeft: "3%",
+    marginTop: "8%",
   },
 });

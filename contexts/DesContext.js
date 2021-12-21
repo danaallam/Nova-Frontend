@@ -9,6 +9,7 @@ export default DesContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [rating, setRating] = useState("");
   const [ref, setRef] = useState(0);
+  const [categories, setCategories] = useState([]);
 
   const getJobs = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -60,9 +61,30 @@ export default DesContextProvider = (props) => {
     });
   };
 
+  const getCategories = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/designer/categories", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    setCategories(data.category);
+  };
+
   const context = {
-    state: { jobs, rating, ref, users },
-    actions: { getJobs, setRating, setRef, setUsers, getUsers, accept, reject },
+    state: { jobs, rating, ref, users, categories },
+    actions: {
+      getJobs,
+      setRating,
+      setRef,
+      setUsers,
+      getUsers,
+      accept,
+      reject,
+      getCategories,
+      setCategories,
+    },
   };
 
   return (

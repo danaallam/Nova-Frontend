@@ -1,17 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState, useContext } from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Platform,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import prof from "../assets/profile.png";
 import Button from "./Button";
 import CardDescription from "./CardDescription";
-import * as DocumentPicker from "expo-document-picker";
 import CardPosts from "./CardPosts";
 import Url from "./Url";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,11 +28,9 @@ export default AppContent = ({
   applied,
   setApplicants,
 }) => {
-  const [file, setFile] = useState("");
-  const [cv, setCv] = useState("");
   const [msg, setMsg] = useState("");
   const {
-    state: { res, ref },
+    state: { res },
     actions: { getResume },
   } = useContext(UserContext);
 
