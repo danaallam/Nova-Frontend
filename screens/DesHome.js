@@ -5,25 +5,21 @@ import { DesContext } from "../contexts/DesContext";
 
 export default DesHome = ({ navigation }) => {
   const {
-    state: { jobs, rating },
-    actions: { getJobs, setRating },
+    state: { jobs, ref },
+    actions: { getJobs },
   } = useContext(DesContext);
 
   useEffect(async () => {
     await getJobs();
-  }, [rating]);
+  }, [ref]);
 
   return (
     <View style={styles.container}>
-      {jobs && jobs.length > 0 && (
-        <Animated.FlatList
-          data={jobs}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Jobs item={item} rating={rating} setRating={setRating} navigation={navigation}/>
-          )}
-        />
-      )}
+      <Animated.FlatList
+        data={jobs}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Jobs item={item} />}
+      />
     </View>
   );
 };

@@ -1,45 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, useWindowDimensions, StyleSheet } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { View, useWindowDimensions, StyleSheet } from "react-native";
 import CardPosts from "./CardPosts";
 import CardDescription from "./CardDescription";
-import CardOwner from "./CardOwner";
-import Application from "./Application";
 import Users from "./Users";
+import { DesContext } from "../contexts/DesContext";
 
-export default Jobs = ({ item, rating, setRating, navigation }) => {
+export default Jobs = ({ item }) => {
   const { width } = useWindowDimensions();
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [desc, setDesc] = useState("");
   const [applicants, setApplicants] = useState("");
-  const [designer, setDesigner] = useState("");
-  const [profile, setProfile] = useState("");
-  const [profession, setProfession] = useState("");
   const [visible, setVisible] = useState(false);
   const [lines, setLines] = useState(2);
   const [cardId, setCardId] = useState(0);
-  const [designerId, setDesignerId] = useState(0);
-  const [save, setSave] = useState(-1);
-  const [accepted, setAccepted] = useState(-1);
-  const [applied, setApplied] = useState(-1);
   const [users, setUsers] = useState([]);
+  const {
+    state: { jobs },
+  } = useContext(DesContext);
 
   useEffect(() => {
-    // setCardId(item.id);
-    // setDesignerId(item.designer.id);
-    // setSave(item.saved);
-    // setAccepted(item.accepted);
-    // setApplied(item.applied);
+    setCardId(item.id);
     setPosts(item.posts);
     setCategories(item.categories);
     setDesc(item.description);
     setApplicants(item.applicants);
     setUsers(item.users);
-    // setDesigner(item.designer.name);
-    // setProfile(item.designer.profile);
-    // setProfession(item.designer.profession);
-    // setRating(item.designer.rating);
-  }, []);
+  }, [jobs]);
 
   const open = () => {
     setVisible(true);
@@ -47,7 +34,12 @@ export default Jobs = ({ item, rating, setRating, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Users visible={visible} setVisible={setVisible} users={users} navigation={navigation} />
+      <Users
+        visible={visible}
+        setVisible={setVisible}
+        users={users}
+        cardId={cardId}
+      />
       <CardPosts posts={posts} width={width} open={open} />
       <CardDescription
         categories={categories}

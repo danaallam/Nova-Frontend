@@ -53,7 +53,6 @@ export default AppContent = ({
       setEna(true);
     }
     await getResume();
-    // console.log(res);
   }, []);
 
   const open = () => {
@@ -74,7 +73,6 @@ export default AppContent = ({
 
   const apply = async () => {
     const token = await AsyncStorage.getItem("token");
-    const id = await AsyncStorage.getItem("user");
     const body = new FormData();
     body.append("resume", res);
     body.append("card_id", cardId);
@@ -86,7 +84,6 @@ export default AppContent = ({
       body,
     });
     const data = await resp.json();
-    // console.log(data);
     setMsg(data.message);
     setEna(true);
     setApplicants((prev) => {

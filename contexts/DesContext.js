@@ -6,9 +6,9 @@ export const DesContext = createContext();
 
 export default DesContextProvider = (props) => {
   const [jobs, setJobs] = useState([]);
+  const [users, setUsers] = useState([]);
   const [rating, setRating] = useState("");
-  const [allJobs, setAllJobs] = useState([]);
-  const [accJobs, setAccJobs] = useState([]);
+  const [ref, setRef] = useState(0);
 
   const getJobs = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -21,31 +21,48 @@ export default DesContextProvider = (props) => {
     setJobs(data.jobs);
   };
 
-  const getAllJobs = async () => {
+  const getUsers = async () => {
     const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/designer/card", {
+    const res = await fetch(Url + "api/designer/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const data = await res.json();
-    setAllJobs(data.cards);
+    setUsers(data.users);
   };
 
-  const getAccJobs = async () => {
+  const accept = async (uid, cid) => {
+    const body = new FormData();
+    body.append("freelancer_id", uid);
+    body.append("card_id", cid);
     const token = await AsyncStorage.getItem("token");
-    const res = await fetch(Url + "api/designer/accepted", {
+    const res = await fetch(Url + "api/designer/accept", {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      body,
     });
-    const data = await res.json();
-    setAccJobs(data.cards);
+  };
+
+  const reject = async (uid, cid) => {
+    const body = new FormData();
+    body.append("freelancer_id", uid);
+    body.append("card_id", cid);
+    const token = await AsyncStorage.getItem("token");
+    const res = await fetch(Url + "api/designer/reject", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body,
+    });
   };
 
   const context = {
-    state: { jobs, rating, allJobs, accJobs },
-    actions: { getJobs, getAllJobs, getAccJobs, setRating, setAllJobs },
+    state: { jobs, rating, ref, users },
+    actions: { getJobs, setRating, setRef, setUsers, getUsers, accept, reject },
   };
 
   return (

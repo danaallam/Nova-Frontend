@@ -15,7 +15,6 @@ export default UserContextProvider = (props) => {
       },
     });
     const data = await res.json();
-    // console.log(data);
     setRes(data.user.resume);
   };
 

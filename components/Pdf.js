@@ -6,11 +6,7 @@ import { WebView } from "react-native-webview";
 export default Pdf = ({ visible, setVisible, resume, Url }) => {
   const [first, setFirst] = useState(0);
   const [end, setEnd] = useState(0);
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    console.log("resume", resume);
-  }, []);
+  // const [show, setShow] = useState(false);
 
   const startMov = (e) => {
     setFirst(e.nativeEvent.pageY);
@@ -37,7 +33,7 @@ export default Pdf = ({ visible, setVisible, resume, Url }) => {
           }}
           onTouchEnd={(e) => {
             endMov(e);
-            setShow(false);
+            // setShow(false);
           }}
           name="horizontal-rule"
           size={45}
