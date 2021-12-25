@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import { View, Animated } from "react-native";
 import Category from "./Category";
 import { DesContext } from "../contexts/DesContext";
 
@@ -30,6 +30,7 @@ export default Categories = ({ Url }) => {
       <Animated.FlatList
         style={styles.flatList}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         data={categories}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -45,13 +46,3 @@ export default Categories = ({ Url }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-  },
-  flatList: {
-    marginVertical: "2%",
-    marginHorizontal: "1%",
-  },
-});

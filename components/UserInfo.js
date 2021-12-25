@@ -1,4 +1,4 @@
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import React, { useEffect, useState, useContext } from "react";
 import {
   Modal,
@@ -131,31 +131,39 @@ export default UserInfo = ({
               >
                 <AntDesign name="instagram" size={20} color="#de4574" />
               </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.link}
+                onPress={() => Linking.openURL(link)}
+              >
+                <FontAwesome name="pinterest" size={20} color="red" />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-        <View style={[styles.btns, { width }]}>
-          <TouchableOpacity
-            style={styles.acc}
-            onPress={async () => {
-              await accept(uid, cardId);
-              setRef((prev) => prev + 1);
-              setOpenInfo(false);
-            }}
-          >
-            <Text style={styles.btnText}>Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.rej}
-            onPress={async () => {
-              await reject(uid, cardId);
-              setRef((prev) => prev + 1);
-              setOpenInfo(false);
-            }}
-          >
-            <Text style={styles.btnText}>Reject</Text>
-          </TouchableOpacity>
-        </View>
+        {cardId > 0 && (
+          <View style={[styles.btns, { width }]}>
+            <TouchableOpacity
+              style={styles.acc}
+              onPress={async () => {
+                await accept(uid, cardId);
+                setRef((prev) => prev + 1);
+                setOpenInfo(false);
+              }}
+            >
+              <Text style={styles.btnText}>Accept</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.rej}
+              onPress={async () => {
+                await reject(uid, cardId);
+                setRef((prev) => prev + 1);
+                setOpenInfo(false);
+              }}
+            >
+              <Text style={styles.btnText}>Reject</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </Modal>
   );

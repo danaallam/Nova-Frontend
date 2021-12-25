@@ -10,11 +10,22 @@ import {
 } from "react-native";
 import Url from "./Url";
 import prof from "../assets/profile.png";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import Pdf from "./Pdf";
 import UserInfo from "./UserInfo";
 
-export default User = ({ item, cardId }) => {
+export default User = ({
+  resume,
+  profile,
+  posts,
+  uid,
+  phone,
+  name,
+  experience,
+  email,
+  link,
+  cardId,
+}) => {
   const [open, setOpen] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
 
@@ -22,22 +33,22 @@ export default User = ({ item, cardId }) => {
 
   return (
     <View style={[styles.container, { height: width / 4 }]}>
-      <Pdf visible={open} setVisible={setOpen} resume={item.resume} Url={Url} />
+      <Pdf visible={open} setVisible={setOpen} resume={resume} Url={Url} />
       <UserInfo
         openInfo={openInfo}
         setOpenInfo={setOpenInfo}
-        resume={item.resume}
-        uid={item.freelancer.id}
+        resume={resume}
+        uid={uid}
         cardId={cardId}
         Url={Url}
-        posts={item.freelancer.posts}
-        experience={item.freelancer.experience}
-        phone={item.freelancer.phone}
+        posts={posts}
+        experience={experience}
+        phone={phone}
         setVisible={setOpen}
-        profile={item.freelancer.profile}
-        name={item.freelancer.name}
-        email={item.freelancer.email}
-        link={item.freelancer.link}
+        profile={profile}
+        name={name}
+        email={email}
+        link={link}
       />
 
       <TouchableOpacity onPress={() => setOpenInfo(true)} style={styles.info}>
@@ -45,34 +56,40 @@ export default User = ({ item, cardId }) => {
           <Image
             style={[styles.img, { width: width / 5, height: width / 5 }]}
             source={
-              item.freelancer.profile
+              profile
                 ? {
-                    uri: Url + item.freelancer.profile,
+                    uri: Url + profile,
                   }
                 : prof
             }
           />
           <View style={styles.txt}>
-            <Text style={styles.name}>{item.freelancer.name}</Text>
-            <Text style={styles.email}>{item.freelancer.email}</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.email}>{email}</Text>
             <View style={styles.icons}>
               <TouchableOpacity
                 style={styles.link}
-                onPress={() => Linking.openURL(item.freelancer.link)}
+                onPress={() => Linking.openURL(link)}
               >
                 <AntDesign name="linkedin-square" size={20} color="#0077b5" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.link}
-                onPress={() => Linking.openURL(item.freelancer.link)}
+                onPress={() => Linking.openURL(link)}
               >
                 <AntDesign name="facebook-square" size={20} color="#4867aa" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.link}
-                onPress={() => Linking.openURL(item.freelancer.link)}
+                onPress={() => Linking.openURL(link)}
               >
                 <AntDesign name="instagram" size={20} color="#de4574" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.link}
+                onPress={() => Linking.openURL(link)}
+              >
+                <FontAwesome name="pinterest" size={20} color="red" />
               </TouchableOpacity>
             </View>
           </View>

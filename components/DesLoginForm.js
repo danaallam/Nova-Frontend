@@ -11,11 +11,11 @@ import {
   HomemadeApple_400Regular,
 } from "@expo-google-fonts/homemade-apple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Register from "../screens/Register";
 import Url from "./Url";
 import styles from "./GlobalStyle";
+import DesRegister from "../screens/DesRegister";
 
-export default LoginForm = ({ navigation }) => {
+export default DesLoginForm = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +51,7 @@ export default LoginForm = ({ navigation }) => {
   if (!fontsLoaded) {
     return (
       <View style={styles.container}>
-        <Register visible={visible} setVisible={setVisible} />
+        <DesRegister visible={visible} setVisible={setVisible} />
         <Text style={styles.title}>Login</Text>
         <TextInput
           value={email}
@@ -74,7 +74,12 @@ export default LoginForm = ({ navigation }) => {
           <Text style={styles.nav}>
             New to <Text>NOVA</Text>?{" "}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log("op");
+              navigation.navigate("DesRegister");
+            }}
+          >
             <Text style={styles.reg}>Register</Text>
           </TouchableOpacity>
         </View>
@@ -83,7 +88,7 @@ export default LoginForm = ({ navigation }) => {
   } else
     return (
       <View style={styles.container}>
-        <Register visible={visible} setVisible={setVisible} />
+        <DesRegister visible={visible} setVisible={setVisible} />
         <Text style={styles.title}>Login</Text>
         <TextInput
           value={email}

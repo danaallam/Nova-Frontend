@@ -35,7 +35,7 @@ export default Rating = ({
         },
         body,
       });
-      setRating((prev) => (prev + star + 1) / 2);
+      // setRating((prev) => (prev + star + 1) / 2);
       setEna(true);
     }
     setRef((prev) => prev + 1);

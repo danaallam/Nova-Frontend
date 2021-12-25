@@ -31,12 +31,14 @@ export default Category = ({ Url, photo, name, handlePec, id }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    flex:1,
+   paddingRight:15
   },
   imgContainer: {
     borderRadius: 100,
     borderWidth: 1,
     borderColor: "#c4bab9",
-    padding: "5%",
+   padding: "5%",
   },
   img: { width: 50, height: 50 },
   txt: {

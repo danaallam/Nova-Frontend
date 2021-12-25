@@ -47,6 +47,7 @@ export default CategoryContainer = ({ categories, Url, setData }) => {
       <Animated.FlatList
         style={styles.flatList}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         data={categories}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (

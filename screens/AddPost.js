@@ -3,23 +3,18 @@ import {
   View,
   StyleSheet,
   useWindowDimensions,
-  Image,
   TouchableOpacity,
   Text,
+  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { MaterialIcons } from "@expo/vector-icons";
-import Url from "../components/Url";
+import { AntDesign } from "@expo/vector-icons";
 
 export default AddPost = () => {
-  const { width, height } = useWindowDimensions();
-  const [openIm, setOpenIm] = useState(false);
-  const [prof, setProf] = useState("");
-  const [photo, setPhoto] = useState("");
-
-  const [selectedImage, setSelectedImage] = useState(null);
+  const { width } = useWindowDimensions();
+  const [desc, setDesc] = useState("");
 
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -35,9 +30,6 @@ export default AddPost = () => {
     if (pickerResult.cancelled === true) {
       return;
     }
-    setSelectedImage({ localUri: pickerResult.uri });
-    setOpenIm(true);
-    setPhoto(pickerResult);
   };
 
   return (
@@ -47,37 +39,24 @@ export default AddPost = () => {
     >
       <View style={styles.container}>
         <View style={styles.contain}>
-          <Image
-            source={
-              selectedImage == null
-                ? prof
-                  ? { uri: Url + prof }
-                  : require("../assets/profile.png")
-                : { uri: selectedImage.localUri }
-            }
-            style={[
-              styles.pic,
-              {
-                width: width / 2,
-                height: width / 2,
-              },
-            ]}
-          />
-          <MaterialIcons
-            name="edit"
-            onPress={openImagePickerAsync}
-            size={25}
+          <AntDesign
+            name="cloudupload"
+            size={80}
             color="black"
-            style={{ position: "absolute", top: 0, right: width / 3 }}
+            onPress={openImagePickerAsync}
           />
+          <Text>Upload photos</Text>
         </View>
 
-        <TouchableOpacity
-          onPress={() => {}}
-          disabled={openIm ? false : true}
-          style={[styles.button, { backgroundColor: openIm ? "blue" : "gray" }]}
-        >
-          <Text style={styles.buttonText}>Update profile</Text>
+        <TextInput
+          placeholder="  Add description"
+          style={[styles.textArea, { height: width / 5 }]}
+          multiline={true}
+          onChangeText={(text) => setDesc(text)}
+          value={desc}
+        />
+        <TouchableOpacity style={styles.done}>
+          <Text style={styles.btnText}>Done</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
@@ -102,7 +81,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-  contain: { marginTop: "5%", alignItems: "center" },
+  contain: { marginTop: "25%", alignItems: "center", marginBottom: "20%" },
   textArea: {
     marginVertical: "5%",
     backgroundColor: "#f7f5f5",
@@ -113,7 +92,7 @@ const styles = StyleSheet.create({
     padding: "3%",
     borderRadius: 20,
     alignSelf: "center",
-    marginTop: "20%",
+    top: "10%",
   },
   btnText: {
     color: "white",

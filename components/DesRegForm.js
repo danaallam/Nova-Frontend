@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Url from "./Url";
 
-export default RegisterForm = ({ navigation }) => {
+export default DesRegForm = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +27,7 @@ export default RegisterForm = ({ navigation }) => {
   const [nameError, setNameError] = useState(" ");
   const [emailError, setEmailError] = useState(" ");
   const [passError, setPassError] = useState(" ");
+  const [profession, setProfession] = useState(" ");
   const [selectedImage, setSelectedImage] = useState(null);
 
   let openImagePickerAsync = async () => {
@@ -48,10 +49,12 @@ export default RegisterForm = ({ navigation }) => {
   };
 
   const register = async () => {
+    console.log("ji");
     const body = new FormData();
     body.append("name", name);
     body.append("email", email.toLowerCase());
     body.append("password", password);
+    body.append("profession", profession);
     if (photo != null) {
       body.append("profile", {
         name: "SampleFile.jpg",
@@ -60,7 +63,7 @@ export default RegisterForm = ({ navigation }) => {
       });
     }
 
-    const res = await fetch(Url + "api/user/register", {
+    const res = await fetch(Url + "api/designer/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -68,14 +71,15 @@ export default RegisterForm = ({ navigation }) => {
       body,
     });
     const data = await res.json();
-    // console.log(data);
+    console.log(data);
     if (data.access_token) {
       setName("");
       setEmail("");
+      setProfession("");
       setPassword("");
       setSelectedImage(null);
       await AsyncStorage.setItem("token", data.access_token);
-      await AsyncStorage.setItem("user", JSON.stringify(data.user.id));
+      await AsyncStorage.setItem("user", JSON.stringify(data.designer.id));
       // navigation.navigate("Account");
     } else {
       if (data.errors.email) {
@@ -129,6 +133,13 @@ export default RegisterForm = ({ navigation }) => {
               placeholder="Email"
             />
             <Text style={styles.error}>{emailError}</Text>
+            <TextInput
+              value={profession}
+              onChangeText={(e) => setProfession(e)}
+              style={[styles.txt, { width: width / 2 }]}
+              placeholder="Profession"
+            />
+            <Text style={styles.error}>{passError}</Text>
             <TextInput
               secureTextEntry
               value={password}

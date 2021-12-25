@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { StyleSheet, View, Animated } from "react-native";
-import Community from "../components/Community";
+import User from "../components/User";
 import { DesContext } from "../contexts/DesContext";
 
 export default Requests = ({ navigation }) => {
@@ -18,7 +18,20 @@ export default Requests = ({ navigation }) => {
       <Animated.FlatList
         data={users}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Community item={item} />}
+        renderItem={({ item }) => (
+          <User
+            resume={item.resume}
+            uid={item.id}
+            posts={item.posts}
+            experience={item.experience}
+            phone={item.phone}
+            profile={item.profile}
+            name={item.name}
+            email={item.email}
+            link={item.link}
+            cardId={0}
+          />
+        )}
       />
     </View>
   );

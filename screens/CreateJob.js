@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import Categories from "../components/Categories";
 import Url from "../components/Url";
 // import { ImageBrowser } from "expo-image-picker-multiple";
@@ -113,38 +113,14 @@ export default CreateJob = () => {
     >
       <View style={styles.container}>
         <View style={styles.contain}>
-          <Image
-            source={
-              selectedImage == null
-                ? prof
-                  ? { uri: Url + prof }
-                  : require("../assets/profile.png")
-                : { uri: selectedImage.localUri }
-            }
-            style={[
-              styles.pic,
-              {
-                width: width / 2,
-                height: width / 2,
-              },
-            ]}
-          />
-          <MaterialIcons
-            name="edit"
-            onPress={openImagePickerAsync}
-            size={25}
+          <AntDesign
+            name="cloudupload"
+            size={80}
             color="black"
-            style={{ position: "absolute", top: 0, right: width / 3 }}
+            onPress={openImagePickerAsync}
           />
+          <Text>Upload photos</Text>
         </View>
-
-        <TouchableOpacity
-          onPress={() => post()}
-          disabled={openIm ? false : true}
-          style={[styles.button, { backgroundColor: openIm ? "blue" : "gray" }]}
-        >
-          <Text style={styles.buttonText}>Update profile</Text>
-        </TouchableOpacity>
 
         <TextInput
           placeholder="  Add description"
@@ -188,7 +164,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-  contain: { marginTop: "5%", alignItems: "center" },
+  contain: { marginTop: "25%", alignItems: "center", marginBottom: "20%" },
   textArea: {
     marginVertical: "5%",
     backgroundColor: "#f7f5f5",
@@ -199,7 +175,8 @@ const styles = StyleSheet.create({
     padding: "3%",
     borderRadius: 20,
     alignSelf: "center",
-    marginTop: "20%",
+    marginTop: "-10%",
+    bottom: "5%",
   },
   btnText: {
     color: "white",

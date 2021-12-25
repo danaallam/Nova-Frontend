@@ -45,7 +45,20 @@ export default Users = ({ visible, setVisible, users, cardId }) => {
           style={styles.flatList}
           data={users}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <User item={item} cardId={cardId} />}
+          renderItem={({ item }) => (
+            <User
+              resume={item.resume}
+              uid={item.freelancer.id}
+              cardId={cardId}
+              posts={item.freelancer.posts}
+              experience={item.freelancer.experience}
+              phone={item.freelancer.phone}
+              profile={item.freelancer.profile}
+              name={item.freelancer.name}
+              email={item.freelancer.email}
+              link={item.freelancer.link}
+            />
+          )}
         />
       </View>
     </Modal>
