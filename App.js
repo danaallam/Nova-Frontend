@@ -1,21 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import MenuNav from "./routes/MenuNav";
+import JobContextProvider from "./contexts/JobContext";
+import DesContextProvider from "./contexts/DesContext";
+import DesMenu from "./routes/DesMenu";
+import UserContextProvider from "./contexts/UserContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <DesContextProvider>
+      <UserContextProvider>
+        <JobContextProvider>
+          <MenuNav />
+          {/* <DesMenu /> */}
+        </JobContextProvider>
+      </UserContextProvider>
+    </DesContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
